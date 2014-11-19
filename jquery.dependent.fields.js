@@ -1,11 +1,12 @@
 (function($){
 
   $.fn.dependsOn = function(element, value, enclosing_tag) {
-    // enclosing tag is span by default
+    // enclosing tag is li by default
     if (!enclosing_tag) {
-      enclosing_tag = 'span';
+      enclosing_tag = 'li';
     }
-    var elements = this;
+    var elements = this,
+        value_on_init = $(element).val();
     //add change handler to element
     $(element).change(function(){        
       var $this = $(this);
@@ -46,7 +47,9 @@
     //hide the dependent fields
     return elements.each(function(){
       var $this = $(this);
-      $this.closest(enclosing_tag).hide();
+      if (value_on_init != value) {
+        $this.closest(enclosing_tag).hide();
+      }
     });
   };
 })( jQuery );
